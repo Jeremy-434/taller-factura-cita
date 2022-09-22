@@ -5,8 +5,7 @@ function validarDatos() {
     let endDate = document.getElementById('inputEndDate').value;
     let radioBtnSi = document.getElementById('flexRadioSi');
     let radioChecked = "";
-    let colorText = document.getElementById('exampleColorInput').value;
-    console.log(colorText);
+
     let firstDateMl = new Date(firstDate);
     let endDateMl = new Date(endDate);
 
@@ -34,6 +33,20 @@ function generarPdf(valorTotal, firstDate, endDate, radioChecked) {
     let name = document.getElementById('inputName').value;
     let lastName = document.getElementById('inputLastName').value;
     let reason = document.getElementById('inputReason').value;
+    let colorText = document.getElementById('exampleColorInput').value;
+    console.log(colorText);
+
+    function hexToRgb(hex) {
+      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
+    }
+    rgbColorR = hexToRgb(colorText).r;
+    rgbColorG = hexToRgb(colorText).g;
+    rgbColorB = hexToRgb(colorText).b;
 
     var doc = new jsPDF();
     doc.setFont('courier');
@@ -41,7 +54,7 @@ function generarPdf(valorTotal, firstDate, endDate, radioChecked) {
     doc.setFontSize(30);
     doc.setTextColor(38,4,118);
     doc.text(20, 15, 'FACTURA');
-    doc.setTextColor();
+    doc.setTextColor(rgbColorR, rgbColorG, rgbColorB);
     doc.setFontType('');
     doc.setFontSize(8);
     doc.text(20, 30, 'Fecha de la factura: ' + new Date());
